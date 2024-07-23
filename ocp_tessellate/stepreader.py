@@ -212,10 +212,12 @@ class StepReader:
 
         for i in range(labels.Length()):
             sub_label = labels.Value(i + 1)
-
-            if self.shape_tool.IsReference_s(sub_label):
+            
+            is_reference = self.shape_tool.IsReference_s(sub_label)
+            if is_reference:
                 ref_label = TDF_Label()
                 self.shape_tool.GetReferredShape_s(sub_label, ref_label)
+                # print(self.get_name(ref_label))
             else:
                 ref_label = sub_label
 
@@ -228,9 +230,11 @@ class StepReader:
 
             sub_shape = self._create_assembly_object(name, loc)
 
+            sub_shape["is_reference"] = is_reference
+
             if is_assembly:
                 sub_shape["shapes"] = self.get_subshapes(ref_label)
-
+            
             elif (
                 self.split_compounds
                 and shape.ShapeType() in [TopAbs_COMPOUND, TopAbs_COMPSOLID]
@@ -337,6 +341,7 @@ class StepReader:
                     name=name,
                     color=None if obj["color"] is None else cq.Color(*obj["color"]),
                     loc=cq.Location(obj.get("loc")),
+                    metadata={"is_reference": obj.get("is_reference")},
                 )
 
             return a
