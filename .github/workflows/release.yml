@@ -25,14 +25,12 @@ jobs:
           workflow: build_wheels.yml
           path: wheels
 
-      - name: List and move wheels
+      - name: Organize wheels
         run: |
           mkdir dist
           for artifact in wheels/*; do
             for whl in "$artifact"/*.whl; do
-              os_version=$(basename "$artifact" | sed 's/ocp-tessellate-orion-//')
-              new_name="ocp_tessellate_orion-0.0.1-${os_version}.whl"
-              mv "$whl" "dist/$new_name"
+              mv "$whl" "dist/"
             done
           done
           rm -rf wheels
