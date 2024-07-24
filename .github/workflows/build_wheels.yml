@@ -38,3 +38,9 @@ jobs:
 
       - name: List built wheels
         run: ls dist/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ocp-tessellate-orion-${{ matrix.os }}-cp${{ matrix.python-version }}
+          path: dist/*.whl
