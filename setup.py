@@ -167,6 +167,7 @@ setup_args = {
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
     ],
+    "cmdclass": {"bdist_wheel": bdist_wheel_repaired},
 }
 
 setup(**setup_args)
