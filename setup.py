@@ -3,7 +3,6 @@ from setuptools import setup, find_packages
 from glob import glob
 import os
 import wheel.bdist_wheel
-import setup
 import zipfile
 import platform
 import shutil
